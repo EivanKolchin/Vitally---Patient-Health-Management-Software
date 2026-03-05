@@ -1,8 +1,3 @@
-# Quick Start - Sepsis Sentinel
-
-**Get up and running in 3 minutes!**
-
----
 
 ## 🚀 Installation
 
@@ -38,7 +33,7 @@ npm run dev
 
 ---
 
-## 🎬 Demo the Killer Feature
+## 🎬 Demo
 
 1. Click on **Sarah Johnson** (High Risk patient)
 2. Note her antibiotic recommendation: **Piperacillin-Tazobactam**
@@ -51,7 +46,7 @@ This demonstrates **hospital-specific antibiotic stewardship** - the core value 
 
 ---
 
-## 📂 Key Files to Explore
+## 📂 Key Files
 
 ### Clinical Logic (The Smart Stuff)
 - `lib/clinical/riskScoring.ts` - Sepsis risk calculation
@@ -73,22 +68,6 @@ This demonstrates **hospital-specific antibiotic stewardship** - the core value 
 
 ---
 
-## 🎤 Explaining to Judges (30 seconds)
-
-> "Sepsis Sentinel is a clinical decision support system that calculates sepsis risk and recommends antibiotics based on local hospital resistance patterns. Watch what happens when I switch hospitals—the recommendation changes from pip-tazo to meropenem because of higher resistance. This is real antibiotic stewardship using local data, which most hospitals don't do well today."
-
----
-
-## 💡 Key Talking Points
-
-1. **Problem:** Sepsis kills 270,000 Americans/year; early antibiotics cut mortality 50%
-2. **Solution:** Automated risk scoring + smart antibiotic recommendations
-3. **Innovation:** Hospital-specific recommendations based on local resistance
-4. **Impact:** Saves lives, combats resistance, saves clinician time
-5. **Tech:** Full-stack TypeScript, Next.js, Tailwind, deterministic clinical algorithms
-
----
-
 ## 🐛 Troubleshooting
 
 **Port already in use?**
@@ -107,26 +86,4 @@ npm install
 - Make sure dev server is running
 - Try http://localhost:3000 in a different browser
 
----
-
-## 📖 Next Steps
-
-- **Full documentation:** See `README.md`
-- **Demo script:** See `DEMO_SCRIPT.md` (5-minute walkthrough)
-- **Installation help:** See `INSTALLATION.md`
-- **Clinical evidence:** See `CLINICAL_EVIDENCE.md`
-
----
-
-## 🏆 Ready to Win!
-
-You now have:
-- ✅ A working full-stack application
-- ✅ Intelligent clinical algorithms
-- ✅ Beautiful, modern UI
-- ✅ A killer demo (hospital switching)
-- ✅ Clear value proposition
-- ✅ Comprehensive documentation
-
-**Go show those judges what real clinical AI looks like! 🚀**
 
