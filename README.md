@@ -2,7 +2,7 @@
 
 **Clinical Decision Support System for Post-Operative Sepsis Management**
 
-A hackathon-ready, full-stack web application that helps clinicians identify and manage post-operative intra-abdominal sepsis through intelligent risk scoring, hospital-specific antibiotic recommendations, and transparent clinical reasoning.
+A full-stack web application that helps clinicians identify and manage post-operative intra-abdominal sepsis through intelligent risk scoring, hospital-specific antibiotic recommendations, and transparent clinical reasoning.
 
 ---
 
@@ -60,7 +60,6 @@ A hackathon-ready, full-stack web application that helps clinicians identify and
    - Automatically installs dependencies (first time only)
    - Starts the development server
    - Opens the app in your browser
-   - Done! ✅
 
 2. **To stop the server:**
    - Run `stop.bat` or press Ctrl+C
@@ -100,31 +99,6 @@ npm start
 
 ---
 
-## 🆕 What's New (Hackathon Edition)
-
-### New Features Added
-✅ **About Page** - Compelling explanation of the clinical problem and solution
-✅ **Enhanced Animations** - Smooth fade-in effects and hover states
-✅ **Batch Files** - One-click start/stop for Windows users
-✅ **Pre-Demo Test Script** - Verify everything works before presenting
-✅ **Winning Strategy Guide** - Complete hackathon presentation playbook
-✅ **Hackathon Pitch Document** - 60-second pitch + judge Q&A responses
-
-### New Documentation
-- `HACKATHON_PITCH.md` - Complete pitch script with timing
-- `WINNING_STRATEGY.md` - How to win with your presentation
-- `start.bat` / `stop.bat` - One-click server control
-- `test-demo.bat` - Pre-presentation testing
-
-### UI Enhancements
-- Sticky header on dashboard
-- "About" link in navigation
-- Smooth card animations on load
-- Enhanced loading states with messages
-- Better hover effects (scale + shadow)
-
----
-
 ## 📁 Project Structure
 
 ```
@@ -156,108 +130,6 @@ sepsis-sentinel/
 │   └── index.ts                  # Core type definitions
 └── README.md                     # This file
 ```
-
----
-
-## 🎯 Demo Script for Hackathon Judges
-
-**Goal:** Showcase the app's clinical intelligence and real-world utility in 3-5 minutes.
-
-### Step 1: Dashboard Overview (30 seconds)
-1. Open the dashboard at http://localhost:3000
-2. Point out:
-   - **3 post-operative patients** with different risk levels
-   - **Color-coded risk indicators** (green/amber/red)
-   - **Key patient info**: surgery type, time post-op, hospital
-
-> **Say:** "Sepsis Sentinel monitors post-operative patients and calculates real-time sepsis risk scores based on vital signs and lab values."
-
----
-
-### Step 2: High-Risk Patient Deep Dive (90 seconds)
-1. Click on **Sarah Johnson** (High Risk patient)
-2. Highlight the **patient header**:
-   - 67-year-old female
-   - Emergency laparotomy for perforated diverticulitis
-   - 24 hours post-op
-   - **HIGH RISK (5/5 score)**
-
-3. Point to **Clinical Snapshot** (left panel):
-   - Red-highlighted abnormal values:
-     - SBP 92 mmHg (hypotension)
-     - RR 28/min (tachypnea)
-     - Temp 39.2°C (fever)
-     - WBC 18.5 (leukocytosis)
-     - Lactate 3.8 (elevated)
-
-4. Show **Vitals Trend Chart**:
-   - Deteriorating trend over 24 hours
-   - Rising heart rate, dropping BP, fever spike
-
-5. Show **Timeline**:
-   - Surgery → Lab draws → Fever spikes
-   - Active risk factors displayed
-
-> **Say:** "Sarah has 5 sepsis risk factors. Her vitals are deteriorating, and she needs immediate antibiotic therapy."
-
----
-
-### Step 3: Antibiotic Recommendation (60 seconds)
-1. Scroll to **Recommended Antibiotic Regimen** (right panel)
-2. Highlight:
-   - **Primary regimen**: Piperacillin-Tazobactam 4.5g IV Q6H for 7 days
-   - **Renal adjustment note**: Dose interval extended due to elevated creatinine
-   - **Local antibiogram data**: Shows E. coli resistance at St. Mary's is only 12%
-
-3. Click **Show Rationale**:
-   - Read key points from the detailed explanation
-   - Mentions risk category, organism, resistance patterns, renal adjustment
-
-4. Click **Copy Note**:
-   - Show the generated clinical note
-   - Ready to paste into EHR
-
-> **Say:** "The system recommends pip-tazo based on low resistance at this hospital and adjusts dosing for her renal impairment. The rationale is transparent and the note is ready to use."
-
----
-
-### Step 4: Hospital Switching - THE KILLER DEMO (90 seconds)
-1. **Change the hospital dropdown** from "St. Mary's General Hospital" to "University Medical Center"
-2. **Watch the page update in real-time**
-3. Point out the changes:
-   - **Primary regimen NOW changes to Meropenem**
-   - **Rationale updates** to explain:
-     - High pip-tazo resistance (28%) at University Medical Center
-     - Meropenem preferred due to ESBL concerns
-   - **Antibiogram data shows the difference**: 12% vs 28% resistance
-
-> **Say:** "This is the power of Sepsis Sentinel. At a different hospital with higher resistance rates, the system automatically recommends a carbapenem instead. This ensures appropriate therapy based on LOCAL data—which is critical for antibiotic stewardship."
-
----
-
-### Step 5: Moderate Risk Patient (Optional, 30 seconds)
-1. Go back to dashboard
-2. Click on **Michael Chen** (Moderate Risk)
-3. Show:
-   - Penicillin allergy alert in red
-   - Recommendation is **Meropenem** (avoiding penicillin)
-   - Alternative regimen provided
-
-> **Say:** "The system also handles patient allergies intelligently, automatically selecting safe alternatives."
-
----
-
-### Step 6: Low Risk Patient (Optional, 15 seconds)
-1. Show **Emily Rodriguez** (Low Risk)
-2. Stable vitals, low risk score
-3. Recommendation still provided (pip-tazo), but less urgent
-
-> **Say:** "Even for stable patients, we provide evidence-based recommendations for early intervention if needed."
-
----
-
-### Closing (15 seconds)
-> **Say:** "Sepsis Sentinel combines clinical algorithms, local resistance data, and patient-specific factors to provide intelligent, explainable antibiotic recommendations. It's designed to improve patient outcomes, support antibiotic stewardship, and save clinician time. Thank you!"
 
 ---
 
@@ -469,52 +341,3 @@ This is a hackathon project! If you'd like to extend or improve it:
 ## 📄 License
 
 This project is provided as-is for educational and demonstration purposes.
-
----
-
-## 👥 Credits
-
-Built with ❤️ for the hackathon.
-
-**Technologies Used:**
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-- Recharts
-
----
-
-## 📞 Support
-
-For questions or issues:
-- Check the code comments (extensively documented)
-- Review the clinical logic files in `lib/clinical/`
-- Inspect the data files in `data/`
-
----
-
-## 🏆 Winning This Hackathon
-
-### Why Sepsis Sentinel Stands Out
-
-1. **Real Clinical Problem** - Sepsis kills 270,000 Americans/year
-2. **Intelligent Solution** - Not just data display; actual clinical reasoning
-3. **Actionable Output** - Ready-to-use recommendations and notes
-4. **Evidence-Based** - Uses real clinical criteria and antibiogram data
-5. **Transparent AI** - Explains every decision
-6. **Beautiful UX** - Clinicians will actually want to use this
-7. **Demo-Ready** - Hospital switching shows clear value
-8. **Extensible** - Clear path to production deployment
-
-### Key Talking Points
-
-- **"This saves lives."** - Early, appropriate antibiotics reduce sepsis mortality by 50%
-- **"This combats resistance."** - Stewardship through local antibiogram integration
-- **"This saves time."** - Auto-generated clinical notes
-- **"This scales."** - Can be deployed across hospital networks
-- **"This is explainable."** - Not a black box; clinicians trust it
-
----
-
-**Good luck at your hackathon! 🚀**
