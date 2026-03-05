@@ -1,0 +1,425 @@
+SEPSIS SENTINEL - PROJECT STRUCTURE
+=====================================
+
+Vitally---Patient-Health-Management-Software/
+│
+├── 📱 APPLICATION FILES
+│   ├── app/                              Next.js 14 App Directory
+│   │   ├── page.tsx                      → Dashboard (patient list)
+│   │   ├── layout.tsx                    → Root layout wrapper
+│   │   ├── globals.css                   → Global styles (Tailwind)
+│   │   └── patient/
+│   │       └── [id]/
+│   │           └── page.tsx              → Patient detail view (dynamic route)
+│   │
+│   ├── components/                       Reusable React Components
+│   │   ├── ClinicalSnapshot.tsx          → Vitals & labs display card
+│   │   ├── VitalsChart.tsx               → Interactive charts (Recharts)
+│   │   ├── Timeline.tsx                  → Clinical event timeline
+│   │   └── AntibioticPlan.tsx            → Recommendation display panel
+│   │
+│   ├── pages/                            API Routes (Next.js)
+│   │   └── api/
+│   │       ├── patients/
+│   │       │   ├── index.ts              → GET /api/patients (list all)
+│   │       │   └── [id].ts               → GET /api/patients/:id (details + recs)
+│   │       └── hospitals/
+│   │           └── index.ts              → GET /api/hospitals (list)
+│   │
+│   ├── lib/                              Business Logic Layer
+│   │   └── clinical/
+│   │       ├── riskScoring.ts            → Sepsis risk calculation engine
+│   │       ├── recommendations.ts        → Antibiotic recommendation logic
+│   │       └── explanations.ts           → Rationale & note generator
+│   │
+│   ├── data/                             Synthetic Data (In-Memory)
+│   │   ├── patients.ts                   → 3 synthetic patients with vitals/labs
+│   │   └── hospitals.ts                  → 2 hospitals with antibiograms
+│   │
+│   └── types/                            TypeScript Type Definitions
+│       └── index.ts                      → All interfaces & types
+│
+├── ⚙️ CONFIGURATION FILES
+│   ├── package.json                      Dependencies & scripts
+│   ├── tsconfig.json                     TypeScript configuration
+│   ├── tailwind.config.ts                Tailwind CSS configuration
+│   ├── postcss.config.js                 PostCSS configuration
+│   ├── next.config.js                    Next.js configuration
+│   ├── .eslintrc.json                    ESLint configuration
+│   ├── .gitignore                        Git ignore rules
+│   └── next-env.d.ts                     Next.js TypeScript declarations
+│
+└── 📚 DOCUMENTATION
+    ├── README.md                         ⭐ Main comprehensive documentation
+    ├── QUICKSTART.md                     🚀 Get running in 3 minutes
+    ├── DEMO_SCRIPT.md                    🎤 5-minute hackathon demo guide
+    ├── INSTALLATION.md                   🔧 Detailed installation instructions
+    ├── CLINICAL_EVIDENCE.md              📖 Clinical evidence & guidelines
+    ├── PROJECT_SUMMARY.md                📊 Complete project overview
+    └── PROJECT_STRUCTURE.txt             📁 This file
+
+
+KEY FILE DESCRIPTIONS
+=====================
+
+🎨 FRONTEND COMPONENTS
+----------------------
+
+app/page.tsx (Dashboard)
+├─ Fetches all patients from API
+├─ Displays patient cards with risk indicators
+├─ Color-coded badges (green/amber/red)
+└─ Click to navigate to patient detail
+
+app/patient/[id]/page.tsx (Patient Detail)
+├─ Fetches single patient with recommendations
+├─ Manages hospital switching state
+├─ Three-column layout:
+│   ├─ Left: ClinicalSnapshot + VitalsChart + Timeline
+│   └─ Right: AntibioticPlan
+└─ Real-time updates on hospital change
+
+components/ClinicalSnapshot.tsx
+├─ Displays latest vitals & labs
+├─ Highlights abnormal values (red background)
+├─ Shows allergy alerts
+└─ Compact, scannable layout
+
+components/VitalsChart.tsx
+├─ Uses Recharts library
+├─ Two charts: HR/BP trend + Temperature trend
+├─ Time-series visualization
+└─ Responsive container
+
+components/Timeline.tsx
+├─ Generates timeline events from patient data
+├─ Surgery, lab draws, fever spikes
+├─ Icon-based visual timeline
+└─ Shows active risk factors
+
+components/AntibioticPlan.tsx
+├─ Primary & alternative regimen cards
+├─ Show/hide detailed rationale
+├─ Copy clinical note to clipboard
+└─ Antibiogram summary
+
+
+🔧 BACKEND API ROUTES
+----------------------
+
+pages/api/patients/index.ts
+├─ Returns array of all patients
+├─ Includes computed risk scores
+└─ Lightweight (for dashboard)
+
+pages/api/patients/[id].ts
+├─ Accepts patientId and optional hospitalId query param
+├─ Fetches patient data
+├─ Computes risk score
+├─ Generates antibiotic recommendation
+├─ Generates explanation
+└─ Returns comprehensive JSON response
+
+pages/api/hospitals/index.ts
+├─ Returns list of hospitals
+└─ Used for dropdown population
+
+
+🧠 CLINICAL LOGIC
+-----------------
+
+lib/clinical/riskScoring.ts
+├─ calculateSepsisRisk(patient): SepsisRiskScore
+│   ├─ Checks 5 criteria (SBP, RR, WBC, Lactate, Temp)
+│   ├─ Assigns 1 point per criterion
+│   ├─ Categorizes: 0-1=Low, 2-3=Moderate, 4-5=High
+│   └─ Returns score + factor breakdown
+├─ getLatestVitals(patient): object
+└─ getLatestLabs(patient): object
+
+lib/clinical/recommendations.ts
+├─ generateAntibioticRecommendation(patient, hospital, riskCategory)
+│   ├─ Step 1: Check penicillin allergy → Meropenem
+│   ├─ Step 2: Check hospital resistance rate
+│   │   └─ If pip-tazo resistance >20% → Meropenem
+│   ├─ Step 3: Check creatinine >150 → Dose adjust
+│   ├─ Step 4: Generate primary regimen
+│   ├─ Step 5: Generate alternative regimen
+│   └─ Returns structured recommendation
+└─ Deterministic, rule-based (no ML)
+
+lib/clinical/explanations.ts
+├─ generateRecommendationExplanation(patient, rec, riskScore)
+│   ├─ buildShortRationale(): 2-3 sentences
+│   ├─ buildDetailedRationale(): full paragraph with risk factors
+│   └─ buildClinicalNote(): EHR-ready structured note
+└─ Template-based (could be replaced with LLM)
+
+
+📊 DATA LAYER
+-------------
+
+data/patients.ts
+├─ 3 synthetic patients:
+│   ├─ Sarah Johnson (High Risk, 5/5 criteria)
+│   ├─ Michael Chen (Moderate Risk, 3/5, penicillin allergy)
+│   └─ Emily Rodriguez (Low Risk, 0/5, stable)
+├─ Each has:
+│   ├─ Demographics (name, age, sex)
+│   ├─ Surgery info
+│   ├─ Time-series vitals (6-12 data points)
+│   ├─ Time-series labs (2-4 data points)
+│   └─ Allergies
+└─ Helper functions: getPatientById(), getAllPatients()
+
+data/hospitals.ts
+├─ 2 hospitals:
+│   ├─ St. Mary's General Hospital (12% pip-tazo resistance)
+│   └─ University Medical Center (28% pip-tazo resistance)
+├─ Each has:
+│   ├─ Name
+│   └─ Antibiogram data for E. coli
+└─ Helper function: getHospitalById()
+
+
+🔤 TYPE DEFINITIONS
+-------------------
+
+types/index.ts
+├─ Patient interface (demographics, vitals, labs, allergies)
+├─ Hospital interface (name, antibiogram)
+├─ SepsisRiskScore interface (score, category, factors)
+├─ AntibioticRecommendation interface (regimens, rationale inputs)
+├─ RecommendationExplanation interface (rationales, note)
+└─ Supporting types (VitalType, TimeSeriesPoint, etc.)
+
+
+DATA FLOW DIAGRAM
+=================
+
+User Opens Dashboard
+        ↓
+GET /api/patients
+        ↓
+Frontend renders 3 patient cards
+        ↓
+User clicks "Sarah Johnson"
+        ↓
+GET /api/patients/patient_001?hospitalId=hospital_a
+        ↓
+API Route:
+  ├─ Fetch patient data (data/patients.ts)
+  ├─ Fetch hospital data (data/hospitals.ts)
+  ├─ calculateSepsisRisk() → score
+  ├─ generateAntibioticRecommendation() → recommendation
+  ├─ generateRecommendationExplanation() → explanation
+  └─ Return JSON bundle
+        ↓
+Frontend renders:
+  ├─ Patient header
+  ├─ ClinicalSnapshot component
+  ├─ VitalsChart component
+  ├─ Timeline component
+  └─ AntibioticPlan component
+        ↓
+User changes hospital dropdown to "University Medical Center"
+        ↓
+GET /api/patients/patient_001?hospitalId=hospital_b
+        ↓
+API computes new recommendation (Meropenem instead of pip-tazo)
+        ↓
+Frontend re-renders with updated recommendation
+        ↓
+User clicks "Copy Note"
+        ↓
+Clinical note copied to clipboard
+        ↓
+DEMO COMPLETE! 🎉
+
+
+TECHNOLOGY STACK
+================
+
+Frontend:
+  ├─ React 18.2
+  ├─ Next.js 14.0 (App Router)
+  ├─ TypeScript 5.3
+  ├─ Tailwind CSS 3.4
+  └─ Recharts 2.10
+
+Backend:
+  ├─ Next.js API Routes (Node.js)
+  └─ TypeScript
+
+Data:
+  ├─ In-memory JSON (no database)
+  └─ Synthetic/seed data
+
+Tooling:
+  ├─ ESLint (linting)
+  ├─ PostCSS (CSS processing)
+  └─ Autoprefixer
+
+
+COMMANDS CHEAT SHEET
+====================
+
+Development:
+  npm install              Install dependencies
+  npm run dev              Start dev server (localhost:3000)
+  npm run build            Build for production
+  npm start                Start production server
+  npm run lint             Run ESLint
+
+File Operations:
+  Open dashboard:          http://localhost:3000
+  Open patient detail:     http://localhost:3000/patient/patient_001
+  API endpoint:            http://localhost:3000/api/patients
+
+
+DEMO QUICK REFERENCE
+====================
+
+High-Risk Patient:    Sarah Johnson (patient_001)
+Moderate-Risk:        Michael Chen (patient_002)
+Low-Risk:             Emily Rodriguez (patient_003)
+
+Hospital A:           St. Mary's General (12% resistance)
+Hospital B:           University Medical Center (28% resistance)
+
+Killer Demo Feature:  Switch hospital → Watch recommendation change
+
+
+FILE SIZES (Approximate)
+=========================
+
+Code Files:
+  ├─ app/page.tsx                     ~200 lines (Dashboard)
+  ├─ app/patient/[id]/page.tsx        ~150 lines (Patient detail)
+  ├─ components/ClinicalSnapshot.tsx  ~170 lines
+  ├─ components/VitalsChart.tsx       ~120 lines
+  ├─ components/Timeline.tsx          ~150 lines
+  ├─ components/AntibioticPlan.tsx    ~250 lines
+  ├─ lib/clinical/riskScoring.ts      ~100 lines
+  ├─ lib/clinical/recommendations.ts  ~150 lines
+  ├─ lib/clinical/explanations.ts     ~200 lines
+  ├─ data/patients.ts                 ~150 lines
+  ├─ data/hospitals.ts                ~50 lines
+  └─ types/index.ts                   ~100 lines
+
+Documentation:
+  ├─ README.md                        ~700 lines (comprehensive)
+  ├─ DEMO_SCRIPT.md                   ~400 lines (detailed demo guide)
+  ├─ INSTALLATION.md                  ~250 lines
+  ├─ QUICKSTART.md                    ~150 lines
+  ├─ CLINICAL_EVIDENCE.md             ~400 lines
+  ├─ PROJECT_SUMMARY.md               ~500 lines
+  └─ PROJECT_STRUCTURE.txt            This file (~400 lines)
+
+Total Code: ~3,500 lines
+Total Docs: ~2,800 lines
+
+
+KEY DESIGN PATTERNS
+===================
+
+1. Separation of Concerns
+   ├─ UI components (app/, components/)
+   ├─ Business logic (lib/)
+   ├─ Data layer (data/)
+   └─ Type definitions (types/)
+
+2. Component-Based Architecture
+   ├─ Reusable components
+   ├─ Props-based composition
+   └─ Single responsibility
+
+3. Type Safety
+   ├─ TypeScript throughout
+   ├─ Strict type checking
+   └─ No `any` types
+
+4. API Design
+   ├─ RESTful endpoints
+   ├─ Query parameters for filtering
+   └─ Structured JSON responses
+
+5. Clinical Logic Separation
+   ├─ Pure functions
+   ├─ Testable in isolation
+   └─ Well-commented
+
+
+HACKATHON SUCCESS CHECKLIST
+============================
+
+Technical Excellence:
+  ✅ Zero linting errors
+  ✅ Type-safe throughout
+  ✅ Clean, organized code
+  ✅ Extensive comments
+  ✅ Professional Git history
+
+Functionality:
+  ✅ All features working
+  ✅ No console errors
+  ✅ Fast performance
+  ✅ Responsive design
+  ✅ Edge cases handled
+
+Demo-Ready:
+  ✅ Beautiful UI
+  ✅ Smooth interactions
+  ✅ Clear value prop
+  ✅ Killer feature (hospital switching)
+  ✅ Professional presentation
+
+Documentation:
+  ✅ Comprehensive README
+  ✅ Demo script
+  ✅ Installation guide
+  ✅ Clinical evidence
+  ✅ Code comments
+
+
+WINNING TALKING POINTS
+=======================
+
+"This saves lives"
+  → Early antibiotics reduce sepsis mortality by 50%
+
+"This is intelligent"
+  → Not just data display; actual clinical reasoning
+
+"This is local"
+  → Hospital-specific recommendations based on resistance patterns
+
+"This is transparent"
+  → Full rationale provided; clinicians can trust it
+
+"This is ready"
+  → Production-quality code, clear path to deployment
+
+"This is impactful"
+  → Sepsis kills 270,000 Americans/year; $27B annual cost
+
+
+CONTACT & CREDITS
+=================
+
+Project:        Sepsis Sentinel
+Purpose:        Hackathon Demo
+Built:          November 2024
+Status:         ✅ Complete & Demo-Ready
+License:        Educational/Demo Use
+
+Technologies:   Next.js, React, TypeScript, Tailwind CSS, Recharts
+Clinical Basis: Sepsis-3, IDSA Guidelines, qSOFA, SIRS Criteria
+
+
+GOOD LUCK AT YOUR HACKATHON! 🏆🚀
+
+=====================================
+END OF PROJECT STRUCTURE DOCUMENT
+=====================================
+
