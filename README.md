@@ -1,4 +1,4 @@
-# Sepsis Sentinel 🏥
+# Sepsis Sentinel 🏥 - A Clinica-data Hackathon build with Heidi
 
 **Clinical Decision Support System for Post-Operative Sepsis Management**
 
